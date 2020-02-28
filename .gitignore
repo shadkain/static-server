@@ -1,3 +1,5 @@
 # Python cache
-/__pycache__/
-/files/
+/pkg/__pycache__/
+
+# Server static files
+/files

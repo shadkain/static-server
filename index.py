@@ -1,8 +1,8 @@
-from server import *
+from pkg.server import Server
 
 
 def main():
-    server = Server()
+    server = Server('config.json')
     server.run()
 
 if __name__ == '__main__':
