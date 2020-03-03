@@ -1,4 +1,6 @@
+import os
 import socket
+import asyncio
 from multiprocessing import Process
 
 from pkg.config import Config
@@ -12,8 +14,9 @@ class Server(object):
     def run(self):
         self.__open_conn()
         self.__spawn_workers()
+        print(f'server is running on: http://{self.__conf.host}:{self.__conf.port}')
 
-        print(f'Server is running on: http://{self.__conf.host}:{self.__conf.port}')
+        self.__run()
 
     def __open_conn(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,15 +27,22 @@ class Server(object):
         self.__sock = sock
 
     def __spawn_workers(self):
-        workers = []
+        self.__processes = []
 
         for i in range(self.__conf.cpu_limit):
-            worker = Process(
+            process = Process(
                 target=Worker(
                     sock=self.__sock,
-                    root=self.__conf.root
+                    conf=self.__conf,
                 ).run
             )
+            self.__processes.append(process)
+            process.start()
 
-            workers.append(worker)
-            print(f'{i} worker loaded')
+    def __run(self):
+        try:
+            os.wait()
+        except KeyboardInterrupt:
+            self.__sock.close()
+            for process in self.__processes:
+                process.terminate()

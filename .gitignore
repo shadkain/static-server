@@ -1,5 +1,7 @@
-# Python cache
+# Servants
 /pkg/__pycache__/
+/venv/
+/.vscode/
 
 # Server static files
 /files
