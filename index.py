@@ -1,4 +1,5 @@
 from pkg.server import Server
+from pkg import log
 
 
 def main():

@@ -1,8 +1,6 @@
 import asyncio
 from socket import socket
 
-import uvloop
-
 from pkg.config import Config
 from pkg.request import Request
 from pkg.response import Response
@@ -31,7 +29,7 @@ class Worker(object):
         try:
             raw_request = await self.__loop.sock_recv(conn, 1024)
             req = Request(raw_request.decode('utf-8'))
-            res = await self.__resp.make_response(req)
+            res = self.__resp.make_response(req)
             await res.send(self.__loop, conn)
         except:
             pass

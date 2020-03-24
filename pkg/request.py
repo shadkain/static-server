@@ -1,5 +1,7 @@
 from urllib import parse
 
+from pkg.log import log
+
 
 class Request(object):
     def __init__(self, raw: str):
@@ -11,8 +13,8 @@ class Request(object):
             method, url, protocol = parts[0].split(' ')
             url = parse.unquote(url)
 
-            print(f'url: {url}')
-            print(f'method: {method}')
+            log(f'url: {url}')
+            log(f'method: {method}')
 
             if '?' in url:
                 url = url[:url.index('?')]

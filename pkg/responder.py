@@ -28,7 +28,7 @@ class Responder(object):
     def __init__(self, conf: Config):
         self.__conf = conf
 
-    async def make_response(self, req: Request) -> Response:
+    def make_response(self, req: Request) -> Response:
         if req.method not in METHODS:
             return Response(status=HTTPStatus.MethodNotAllowed) 
 

@@ -43,6 +43,6 @@ class Server(object):
         try:
             os.wait()
         except KeyboardInterrupt:
-            self.__sock.close()
             for process in self.__processes:
                 process.terminate()
+            self.__sock.close()

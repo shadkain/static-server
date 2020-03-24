@@ -4,6 +4,8 @@ import mimetypes
 from datetime import datetime
 from socket import socket
 
+from pkg.log import log
+
 
 class Response(object):
     def __init__(self, status: int, method: str = 'GET', protocol: str = 'HTTP/1.1', filepath: str = None):
@@ -40,5 +42,5 @@ class Response(object):
         from pkg.responder import HTTP_STATUS_MESSAGES
         hdrs = f'{self.protocol} {self.status} {HTTP_STATUS_MESSAGES[self.status]}\r\n'
         hdrs += '\r\n'.join([f'{key}: {value}' for key, value in self.headers.items()]) + '\r\n\r\n'
-        print(hdrs)
+        log(hdrs)
         return hdrs.encode('utf-8')
